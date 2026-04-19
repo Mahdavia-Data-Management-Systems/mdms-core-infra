@@ -53,12 +53,6 @@ Assign the following on the subscription (**Portal → Subscriptions → Access 
 |---|---|---|
 | `Contributor` | Subscription | Create and manage Azure resources |
 
-Assign the following Entra ID directory role (**Portal → Microsoft Entra ID → Roles and administrators**):
-
-| Role | Purpose |
-|---|---|
-| `b2cTenantCreator` | Required to create Azure AD B2C tenants |
-
 #### Federated credentials (OIDC)
 
 No client secret is used. Configure federated credentials on the service principal so GitHub Actions can authenticate via OIDC.

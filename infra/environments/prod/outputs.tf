@@ -1,9 +1,9 @@
 output "tenant_id" {
-  description = "B2C tenant ID."
-  value       = module.b2c.tenant_id
+  description = "Entra External ID tenant ID."
+  value       = module.entra.tenant_id
 }
 
-output "b2c_tenant_domain" {
-  description = "B2C tenant domain."
-  value       = module.b2c.b2c_tenant_domain
+output "tenant_domain" {
+  description = "Entra External ID tenant domain."
+  value       = module.entra.tenant_domain
 }
