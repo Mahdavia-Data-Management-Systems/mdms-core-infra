@@ -7,17 +7,18 @@ Manages cloud infrastructure using Terraform. State is stored in Terraform Cloud
 ```
 infra/
 ├── modules/
-│   └── b2c/                # Azure AD B2C tenant module
+│   └── entra/                # Entra External ID (CIAM) tenant module
 │       ├── main.tf
 │       ├── variables.tf
-│       └── outputs.tf
+│       ├── outputs.tf
+│       └── versions.tf
 └── environments/
-    ├── dev/                # TFC workspace: core-dev
+    ├── dev/                  # TFC workspace: core-dev
     │   ├── versions.tf
     │   ├── main.tf
     │   ├── variables.tf
     │   └── outputs.tf
-    └── prod/               # TFC workspace: core-prod
+    └── prod/                 # TFC workspace: core-prod
         ├── versions.tf
         ├── main.tf
         ├── variables.tf
@@ -26,12 +27,19 @@ infra/
 
 ## Environments
 
-| Environment | Resource Group | B2C Domain | TFC Workspace |
+| Environment | Resource Group | Entra Domain | TFC Workspace |
 |---|---|---|---|
-| dev | rg-mdms-dev-si-01 | mdmsdev.onmicrosoft.com | core-dev |
-| prod | rg-mdms-prod-si-01 | mdms.onmicrosoft.com | core-prod |
+| dev | rg-mdms-dev-si-01 | mahdavisonlinedev.onmicrosoft.com | core-dev |
+| prod | rg-mdms-prod-si-01 | mahdavisonline.onmicrosoft.com | core-prod |
 
-All resource groups are located in **South India**. B2C data residency is **Asia Pacific**.
+All resource groups are located in **South India**.
+
+## Providers
+
+| Provider | Source | Purpose |
+|---|---|---|
+| `azurerm` | `hashicorp/azurerm ~> 3.110` | Core Azure resource management |
+| `azapi` | `azure/azapi ~> 1.15` | Entra External ID (CIAM) directory lookup |
 
 ## CI/CD Pipeline
 
@@ -55,7 +63,7 @@ GitHub authenticates to Azure via **federated credentials (OIDC)** — no client
 
 - Terraform >= 1.7
 - Terraform Cloud account in the `noormahdi` organization with workspaces `core-dev` and `core-prod` set to **Local** execution mode
-- Azure service principal with `Contributor` and `Application Administrator` roles, configured with a federated credential for this repository
+- Azure service principal with `Contributor` role, configured with a federated credential for this repository
 
 ## Required GitHub Secrets
 

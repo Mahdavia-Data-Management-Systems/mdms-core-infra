@@ -11,7 +11,7 @@ Cloud infrastructure and data management platform for Mahdavia, built on Azure w
 │       └── main.yml        # CI/CD pipeline
 ├── infra/
 │   ├── modules/
-│   │   └── b2c/            # Azure AD B2C tenant module
+│   │   └── entra/          # Entra External ID (CIAM) tenant module
 │   └── environments/
 │       ├── dev/            # Dev environment
 │       └── prod/           # Prod environment
