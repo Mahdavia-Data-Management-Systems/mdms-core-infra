@@ -43,6 +43,6 @@ function Upload-Asset($file, $endpoint, $mime) {
 Upload-Asset background.jpg  backgroundImage image/jpeg
 Upload-Asset banner-logo.png bannerLogo      image/png
 Upload-Asset square-logo.jpg squareLogo      image/jpeg
-Upload-Asset favicon.ico     favicon         image/x-icon
+Upload-Asset favicon.ico     favicon         image/vnd.microsoft.icon
 
 Write-Host "Branding applied to tenant $env:TENANT_ID."
