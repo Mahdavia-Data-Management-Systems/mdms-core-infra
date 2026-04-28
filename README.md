@@ -9,13 +9,20 @@ Cloud infrastructure and data management platform for Mahdavia, built on Azure w
 ├── .github/
 │   └── workflows/
 │       └── main.yml        # CI/CD pipeline
-├── infra/
-│   ├── modules/
-│   │   └── entra/          # Entra External ID (CIAM) tenant module
-│   └── environments/
-│       ├── dev/            # Dev environment
-│       └── prod/           # Prod environment
-└── docs/                   # Project documentation
+└── infra/
+    ├── modules/
+    │   └── entra/          # Entra External ID (CIAM) tenant module
+    │       ├── main.tf
+    │       ├── variables.tf
+    │       ├── outputs.tf
+    │       ├── versions.tf
+    │       ├── branding.tf  # Custom branding via Microsoft Graph API
+    │       ├── assets/      # Brand images (background, logos, favicon)
+    │       ├── css/         # custom.css for sign-in page
+    │       └── scripts/     # apply-branding.ps1
+    └── environments/
+        ├── dev/            # Dev environment
+        └── prod/           # Prod environment
 ```
 
 ## Prerequisites
@@ -26,6 +33,7 @@ Cloud infrastructure and data management platform for Mahdavia, built on Azure w
 |---|---|---|
 | Terraform | >= 1.7 | https://developer.hashicorp.com/terraform/install |
 | Azure CLI | Latest | https://learn.microsoft.com/en-us/cli/azure/install-azure-cli |
+| PowerShell | 7+ (`pwsh`) | https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell |
 
 ### Terraform Cloud
 
@@ -88,10 +96,12 @@ Add the following secrets at **GitHub repo → Settings → Secrets and variable
 
 Create two environments at **GitHub repo → Settings → Environments**:
 
-| Environment | Protection rule |
-|---|---|
-| `dev` | None — deploys automatically |
-| `prod` | **Required reviewers** — add yourself to gate prod deployments |
+| Environment | Protection rule | Environment secrets |
+|---|---|---|
+| `dev` | None — deploys automatically | `CIAM_CLIENT_ID`, `CIAM_CLIENT_SECRET` |
+| `prod` | **Required reviewers** — add yourself to gate prod deployments | `CIAM_CLIENT_ID`, `CIAM_CLIENT_SECRET` |
+
+`CIAM_CLIENT_ID` and `CIAM_CLIENT_SECRET` are credentials for an app registration created **inside** each CIAM tenant (not the home tenant), used to apply custom branding via Microsoft Graph API. See [`infra/README.md`](infra/README.md) for the one-time CIAM setup steps.
 
 ## CI/CD Pipeline
 
