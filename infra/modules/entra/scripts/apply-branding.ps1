@@ -9,20 +9,19 @@ $tokenResponse = Invoke-RestMethod -Method Post `
 $token = $tokenResponse.access_token
 
 $headers = @{ Authorization = "Bearer $token" }
-$orgId   = (Invoke-RestMethod -Method Get -Uri "https://graph.microsoft.com/v1.0/organization" -Headers $headers).value[0].id
-$graph   = "https://graph.microsoft.com/v1.0/organization/$orgId"
+$graph   = "https://graph.microsoft.com/v1.0/organization/$env:TENANT_ID"
 
-# ── Text + colour properties (PUT creates-or-replaces the default localization) ──
-$brandingBody = @{
+# ── Text + colour properties ──────────────────────────────────────────────
+$patchBody = @{
   backgroundColor  = '#0F3D2E'
   signInPageText   = $env:SIGN_IN_TEXT
   usernameHintText = 'Enter your email'
 } | ConvertTo-Json
 
-Invoke-RestMethod -Method Put -Uri "$graph/branding/localizations/0" `
+Invoke-RestMethod -Method Patch -Uri "$graph/branding" `
   -Headers ($headers + @{ 'Accept-Language' = '0' }) `
   -ContentType 'application/json' `
-  -Body $brandingBody
+  -Body $patchBody
 
 # ── Custom CSS ────────────────────────────────────────────────────────────
 Invoke-RestMethod -Method Put -Uri "$graph/branding/localizations/0/customCSS" `
