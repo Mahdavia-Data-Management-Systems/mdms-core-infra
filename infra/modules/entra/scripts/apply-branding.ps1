@@ -8,9 +8,8 @@ $tokenResponse = Invoke-RestMethod -Method Post `
   -Body "client_id=$env:CLIENT_ID&client_secret=$env:CLIENT_SECRET&scope=https://graph.microsoft.com/.default&grant_type=client_credentials"
 $token = $tokenResponse.access_token
 
+$graph   = "https://graph.microsoft.com/v1.0/organization/$env:TENANT_ID"
 $headers = @{ Authorization = "Bearer $token" }
-$orgId   = (Invoke-RestMethod -Method Get -Uri "https://graph.microsoft.com/v1.0/organization" -Headers $headers).value[0].id
-$graph   = "https://graph.microsoft.com/v1.0/organization/$orgId"
 
 # ── Text + colour properties ──────────────────────────────────────────────
 $patchBody = @{
