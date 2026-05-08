@@ -12,17 +12,17 @@ $headers = @{ Authorization = "Bearer $token" }
 $orgId   = (Invoke-RestMethod -Method Get -Uri "https://graph.microsoft.com/v1.0/organization" -Headers $headers).value[0].id
 $graph   = "https://graph.microsoft.com/v1.0/organization/$orgId"
 
-# ── Text + colour properties ──────────────────────────────────────────────
-$patchBody = @{
+# ── Text + colour properties (PUT creates-or-replaces the default localization) ──
+$brandingBody = @{
   backgroundColor  = '#0F3D2E'
   signInPageText   = $env:SIGN_IN_TEXT
   usernameHintText = 'Enter your email'
 } | ConvertTo-Json
 
-Invoke-RestMethod -Method Patch -Uri "$graph/branding" `
+Invoke-RestMethod -Method Put -Uri "$graph/branding/localizations/0" `
   -Headers ($headers + @{ 'Accept-Language' = '0' }) `
   -ContentType 'application/json' `
-  -Body $patchBody
+  -Body $brandingBody
 
 # ── Custom CSS ────────────────────────────────────────────────────────────
 Invoke-RestMethod -Method Put -Uri "$graph/branding/localizations/0/customCSS" `
