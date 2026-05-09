@@ -11,6 +11,25 @@ $token = $tokenResponse.access_token
 $headers = @{ Authorization = "Bearer $token" }
 $graph   = "https://graph.microsoft.com/v1.0/organization/$env:TENANT_ID"
 
+# ── Ensure branding localization exists ──────────────────────────────────
+try {
+  Invoke-RestMethod -Method Get -Uri "$graph/branding/localizations/0" -Headers $headers | Out-Null
+  Write-Host "Branding localization already exists."
+} catch {
+  if ($_.Exception.Response.StatusCode.value__ -eq 404) {
+    Write-Host "No branding localization found. Creating English localization..."
+    $locBody = @{
+      '@odata.type' = '#microsoft.graph.organizationalBrandingLocalization'
+      id            = '0'
+    } | ConvertTo-Json
+    Invoke-RestMethod -Method Post -Uri "$graph/branding/localizations" `
+      -Headers $headers `
+      -ContentType 'application/json' `
+      -Body $locBody
+    Write-Host "Created branding localization."
+  } else { throw }
+}
+
 # ── Text + colour properties ──────────────────────────────────────────────
 $patchBody = @{
   backgroundColor  = '#0F3D2E'
