@@ -9,7 +9,7 @@ on:
       deploy_prod:
         description: Deploy to production
         type: boolean
-        default: false
+        default: true
 
 permissions:
   id-token: write
