@@ -19,8 +19,9 @@ try {
   if ($_.Exception.Response.StatusCode.value__ -eq 404) {
     Write-Host "No branding localization found. Creating English localization..."
     $locBody = @{
-      '@odata.type' = '#microsoft.graph.organizationalBrandingLocalization'
-      id            = 'en-US'
+      '@odata.type'    = '#microsoft.graph.organizationalBrandingLocalization'
+      id               = 'en-US'
+      usernameHintText = 'Enter your email'
     } | ConvertTo-Json
     Invoke-RestMethod -Method Post -Uri "$graph/branding/localizations" `
       -Headers $headers `
