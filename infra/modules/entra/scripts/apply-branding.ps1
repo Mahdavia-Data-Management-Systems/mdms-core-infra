@@ -27,7 +27,8 @@ try {
       -Headers $headers `
       -ContentType 'application/json' `
       -Body $locBody
-    Write-Host "Created branding localization."
+    Write-Host "Created branding localization. Waiting 10 seconds before proceeding..."
+    Start-Sleep -Seconds 10
   } else { throw }
 }
 
