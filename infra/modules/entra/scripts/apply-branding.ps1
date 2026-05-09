@@ -20,7 +20,7 @@ try {
     Write-Host "No branding localization found. Creating English localization..."
     $locBody = @{
       '@odata.type' = '#microsoft.graph.organizationalBrandingLocalization'
-      id            = '0'
+      id            = 'en-US'
     } | ConvertTo-Json
     Invoke-RestMethod -Method Post -Uri "$graph/branding/localizations" `
       -Headers $headers `
