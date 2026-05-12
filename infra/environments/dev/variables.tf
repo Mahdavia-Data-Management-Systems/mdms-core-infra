@@ -14,3 +14,18 @@ variable "ciam_client_secret" {
   type        = string
   sensitive   = true
 }
+
+variable "gcp_project_id" {
+  description = "ID of the existing GCP project for the dev Google OAuth app."
+  type        = string
+}
+
+variable "gcp_support_email" {
+  description = "Support email shown on the Google OAuth consent screen."
+  type        = string
+}
+
+variable "ciam_tenant_id" {
+  description = "Entra External ID (CIAM) tenant ID GUID for the dev tenant. Find it in Azure Portal → Entra ID → Overview. Used to build Google OAuth redirect URIs."
+  type        = string
+}

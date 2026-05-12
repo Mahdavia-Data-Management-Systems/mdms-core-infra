@@ -10,6 +10,10 @@ terraform {
       source  = "azure/azapi"
       version = "~> 1.15"
     }
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 5.0"
+    }
   }
 
   cloud {
