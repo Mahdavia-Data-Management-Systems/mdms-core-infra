@@ -48,10 +48,8 @@ jobs:
       TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       TF_VAR_ciam_client_id: ${{ secrets.CIAM_CLIENT_ID }}
       TF_VAR_ciam_client_secret: ${{ secrets.CIAM_CLIENT_SECRET }}
-      TF_VAR_ciam_tenant_id: ${{ secrets.CIAM_TENANT_ID }}
-      TF_VAR_gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}
-      TF_VAR_gcp_support_email: ${{ secrets.GCP_SUPPORT_EMAIL }}
-      GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      TF_VAR_google_client_id: ${{ secrets.GOOGLE_CLIENT_ID }}
+      TF_VAR_google_client_secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -82,10 +80,8 @@ jobs:
       TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       TF_VAR_ciam_client_id: ${{ secrets.CIAM_CLIENT_ID }}
       TF_VAR_ciam_client_secret: ${{ secrets.CIAM_CLIENT_SECRET }}
-      TF_VAR_ciam_tenant_id: ${{ secrets.CIAM_TENANT_ID }}
-      TF_VAR_gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}
-      TF_VAR_gcp_support_email: ${{ secrets.GCP_SUPPORT_EMAIL }}
-      GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      TF_VAR_google_client_id: ${{ secrets.GOOGLE_CLIENT_ID }}
+      TF_VAR_google_client_secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
