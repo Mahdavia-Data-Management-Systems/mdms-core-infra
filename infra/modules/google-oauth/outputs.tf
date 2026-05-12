@@ -1,6 +1,6 @@
 output "project_id" {
   description = "GCP project ID."
-  value       = google_project.mdms.project_id
+  value       = data.google_project.mdms.project_id
 }
 
 output "client_id" {
