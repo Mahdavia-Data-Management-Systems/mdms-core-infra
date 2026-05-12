@@ -37,12 +37,12 @@ resource "google_project_service" "secretmanager" {
 # org_internal_only = false allows external (non-org) Google accounts to sign in,
 # which is required for customer-facing federation.
 #
-resource "google_iap_brand" "oauth_brand" {
-  project           = var.project_id
-  support_email     = var.support_email
-  application_title = var.oauth_client_display_name
-  depends_on        = [google_project_service.iap]
-}
+# resource "google_iap_brand" "oauth_brand" {
+#   project           = var.project_id
+#   support_email     = var.support_email
+#   application_title = var.oauth_client_display_name
+#   depends_on        = [google_project_service.iap]
+# }
 
 # ── Secret Manager secret (container) ────────────────────────────────────────
 #
@@ -73,7 +73,7 @@ resource "google_secret_manager_secret" "oauth_creds" {
 #
 resource "terraform_data" "oauth_client" {
   triggers_replace = [
-    google_iap_brand.oauth_brand.name,
+    # google_iap_brand.oauth_brand.name,
     join(",", local.redirect_uris),
     var.oauth_client_display_name,
   ]

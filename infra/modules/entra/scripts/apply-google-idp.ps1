@@ -20,7 +20,7 @@ if ($null -eq $googleIdP) {
 
   $body = @{
     '@odata.type'        = 'microsoft.graph.socialIdentityProvider'
-    displayName          = 'Google'
+    displayName          = 'Login with Google'
     identityProviderType = 'Google'
     clientId             = $env:GOOGLE_CLIENT_ID
     clientSecret         = $env:GOOGLE_CLIENT_SECRET
