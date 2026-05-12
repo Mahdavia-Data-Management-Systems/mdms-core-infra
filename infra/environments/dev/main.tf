@@ -6,4 +6,7 @@ module "entra" {
 
   ciam_client_id     = var.ciam_client_id
   ciam_client_secret = var.ciam_client_secret
+
+  google_client_id     = var.google_client_id
+  google_client_secret = var.google_client_secret
 }

@@ -24,3 +24,14 @@ variable "branding_sign_in_text" {
   type        = string
   default     = "One Identity. One Community. Endless Access."
 }
+
+variable "google_client_id" {
+  description = "Google OAuth2 client ID used to configure Google as a social identity provider in the CIAM tenant."
+  type        = string
+}
+
+variable "google_client_secret" {
+  description = "Google OAuth2 client secret for the social identity provider."
+  type        = string
+  sensitive   = true
+}

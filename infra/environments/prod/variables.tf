@@ -14,3 +14,14 @@ variable "ciam_client_secret" {
   type        = string
   sensitive   = true
 }
+
+variable "google_client_id" {
+  description = "Google OAuth2 client ID for the prod environment."
+  type        = string
+}
+
+variable "google_client_secret" {
+  description = "Google OAuth2 client secret for the prod environment."
+  type        = string
+  sensitive   = true
+}
