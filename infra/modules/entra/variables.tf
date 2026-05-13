@@ -28,10 +28,29 @@ variable "branding_sign_in_text" {
 variable "google_client_id" {
   description = "Google OAuth2 client ID used to configure Google as a social identity provider in the CIAM tenant."
   type        = string
+  default     = null
+  nullable    = true
 }
 
 variable "google_client_secret" {
   description = "Google OAuth2 client secret for the social identity provider."
   type        = string
   sensitive   = true
+  default     = null
+  nullable    = true
+}
+
+variable "facebook_client_id" {
+  description = "Facebook app ID used to configure Facebook as a social identity provider in the CIAM tenant."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
+variable "facebook_client_secret" {
+  description = "Facebook app secret for the social identity provider."
+  type        = string
+  sensitive   = true
+  default     = null
+  nullable    = true
 }

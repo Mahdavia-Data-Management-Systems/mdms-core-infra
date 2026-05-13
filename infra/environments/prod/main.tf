@@ -9,4 +9,7 @@ module "entra" {
 
   google_client_id     = var.google_client_id
   google_client_secret = var.google_client_secret
+
+  facebook_client_id     = var.facebook_client_id
+  facebook_client_secret = var.facebook_client_secret
 }
