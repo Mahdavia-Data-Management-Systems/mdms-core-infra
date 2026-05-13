@@ -36,7 +36,7 @@ function Set-SocialIdentityProvider {
     Write-Host "$ProviderType identity provider created in tenant."
   } else {
     Write-Host "$ProviderType identity provider already exists (id: $($idp.id)) — updating credentials..."
-    $body = @{ clientId = $IdpClientId; clientSecret = $IdpClientSecret } | ConvertTo-Json
+    $body = @{ clientId = $IdpClientId; clientSecret = $IdpClientSecret; displayName = $DisplayName } | ConvertTo-Json
     Invoke-RestMethod -Method Patch -Uri "$idpBase/$($idp.id)" -Headers $Headers -ContentType 'application/json' -Body $body | Out-Null
     Write-Host "$ProviderType identity provider credentials updated."
   }
