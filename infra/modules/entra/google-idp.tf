@@ -8,10 +8,13 @@
 # the google-oauth module and passed in as variables.
 #
 resource "terraform_data" "google_idp" {
+  count = var.google_client_id != null ? 1 : 0
+
   triggers_replace = [
     var.google_client_id,
     local.ciam_tenant_id,
     filesha256("${path.module}/scripts/apply-google-idp.ps1"),
+    filesha256("${path.module}/scripts/idp-helpers.ps1"),
   ]
 
   provisioner "local-exec" {
