@@ -1,0 +1,20 @@
+# App registrations to deploy in the prod CIAM tenant.
+# Each entry maps 1:1 to an Entra External ID app registration.
+#
+# Required fields:
+#   name         — unique key used as the Terraform resource identifier (no spaces)
+#   display_name — name shown in the Azure portal
+#
+# Optional fields (defaults shown):
+#   app_type         : spa          # "spa" (PKCE, public) or "web" (confidential)
+#   redirect_uris    : []           # list of allowed redirect URIs
+#   logout_url       : null         # front-channel logout URL (web apps only)
+#   sign_in_audience : AzureADandPersonalMicrosoftAccount
+
+apps:
+  - name: sample-app
+    display_name: "Sample App"
+    app_type: web
+    redirect_uris:
+      - https://jwt.io
+    logout_url: https://sample.mahdavisonline.com/signout-callback-oidc
