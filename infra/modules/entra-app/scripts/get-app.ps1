@@ -13,10 +13,20 @@ $displayName  = $query.display_name
 $token   = Get-GraphToken -TenantId $tenantId -ClientId $clientId -ClientSecret $clientSecret
 $headers = @{ Authorization = "Bearer $token" }
 
-$app = Get-AppByDisplayName -Headers $headers -DisplayName $displayName
+$app       = $null
+$attempts  = 10
+$delaySecs = 6
+for ($i = 1; $i -le $attempts; $i++) {
+  $app = Get-AppByDisplayName -Headers $headers -DisplayName $displayName
+  if ($null -ne $app) { break }
+  if ($i -lt $attempts) {
+    [Console]::Error.WriteLine("App '$displayName' not yet visible (attempt $i/$attempts); retrying in ${delaySecs}s...")
+    Start-Sleep -Seconds $delaySecs
+  }
+}
 
 if ($null -eq $app) {
-  Write-Error "Application '$displayName' not found in tenant $tenantId"
+  Write-Error "Application '$displayName' not found in tenant $tenantId after $attempts attempts"
   exit 1
 }
 
