@@ -18,9 +18,3 @@ apps:
     redirect_uris:
       - https://jwt.io
     logout_url: https://sample-dev.mahdavisonline.com/signout-callback-oidc
-  - name: sample-app-2
-    display_name: "Sample App 2"
-    app_type: web
-    redirect_uris:
-      - https://jwt.io
-    logout_url: https://sample-dev.mahdavisonline.com/signout-callback-oidc
