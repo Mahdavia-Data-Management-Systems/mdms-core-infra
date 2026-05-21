@@ -14,19 +14,6 @@ function Get-AppByDisplayName {
   return $result.value | Select-Object -First 1
 }
 
-function Remove-AppRegistration {
-  param([hashtable]$Headers, [string]$DisplayName)
-  $existing = Get-AppByDisplayName -Headers $Headers -DisplayName $DisplayName
-  if ($null -eq $existing) {
-    Write-Host "Application '$DisplayName' not found — nothing to delete."
-    return
-  }
-  Invoke-RestMethod -Method Delete `
-    -Uri "https://graph.microsoft.com/v1.0/applications/$($existing.id)" `
-    -Headers $Headers | Out-Null
-  Write-Host "Application '$DisplayName' deleted."
-}
-
 function Set-AppRegistration {
   param(
     [hashtable]$Headers,

@@ -15,9 +15,6 @@ locals {
 }
 
 resource "terraform_data" "app" {
-  # Indices: [0]=tenant_id [1]=display_name [2]=app_type [3]=sign_in_audience
-  #          [4]=redirect_uris [5]=logout_url [6]=client_id [7]=client_secret
-  #          [8]=apply-app.ps1 [9]=app-helpers.ps1 [10]=delete-app.ps1
   triggers_replace = [
     local.tenant_id,
     var.display_name,
@@ -25,11 +22,8 @@ resource "terraform_data" "app" {
     var.sign_in_audience,
     jsonencode(var.redirect_uris),
     var.logout_url,
-    var.ciam_client_id,
-    var.ciam_client_secret,
     filesha256("${path.module}/scripts/apply-app.ps1"),
     filesha256("${path.module}/scripts/app-helpers.ps1"),
-    filesha256("${path.module}/scripts/delete-app.ps1"),
   ]
 
   provisioner "local-exec" {
@@ -45,19 +39,6 @@ resource "terraform_data" "app" {
       REDIRECT_URIS    = jsonencode(var.redirect_uris)
       LOGOUT_URL       = var.logout_url != null ? var.logout_url : ""
       SIGN_IN_AUDIENCE = var.sign_in_audience
-    }
-  }
-
-  provisioner "local-exec" {
-    when        = destroy
-    interpreter = ["pwsh", "-File"]
-    command     = "${path.module}/scripts/delete-app.ps1"
-
-    environment = {
-      TENANT_ID     = self.triggers_replace[0]
-      DISPLAY_NAME  = self.triggers_replace[1]
-      CLIENT_ID     = self.triggers_replace[6]
-      CLIENT_SECRET = self.triggers_replace[7]
     }
   }
 }
