@@ -24,6 +24,9 @@ resource "terraform_data" "app" {
     var.logout_url,
     filesha256("${path.module}/scripts/apply-app.ps1"),
     filesha256("${path.module}/scripts/app-helpers.ps1"),
+    filesha256("${path.module}/scripts/delete-app.ps1"),
+    var.ciam_client_id,     # [9]  — needed by destroy provisioner via self
+    var.ciam_client_secret, # [10] — needed by destroy provisioner via self
   ]
 
   provisioner "local-exec" {
@@ -39,6 +42,19 @@ resource "terraform_data" "app" {
       REDIRECT_URIS    = jsonencode(var.redirect_uris)
       LOGOUT_URL       = var.logout_url != null ? var.logout_url : ""
       SIGN_IN_AUDIENCE = var.sign_in_audience
+    }
+  }
+
+  provisioner "local-exec" {
+    when        = destroy
+    interpreter = ["pwsh", "-File"]
+    command     = "${path.module}/scripts/delete-app.ps1"
+
+    environment = {
+      TENANT_ID     = self.triggers_replace[0]
+      DISPLAY_NAME  = self.triggers_replace[1]
+      CLIENT_ID     = self.triggers_replace[9]
+      CLIENT_SECRET = self.triggers_replace[10]
     }
   }
 }
