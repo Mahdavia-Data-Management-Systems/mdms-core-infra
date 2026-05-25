@@ -8,21 +8,39 @@ Cloud infrastructure and data management platform for Mahdavia, built on Azure w
 .
 ├── .github/
 │   └── workflows/
-│       └── main.yml        # CI/CD pipeline
+│       ├── main.yml           # Core CI/CD pipeline (CIAM tenants)
+│       ├── apps-dev.yml       # Dev app registrations pipeline
+│       └── apps-prod.yml      # Prod app registrations pipeline
+├── assets/                    # Brand source assets (logos, favicon)
 └── infra/
     ├── modules/
-    │   └── entra/          # Entra External ID (CIAM) tenant module
-    │       ├── main.tf
-    │       ├── variables.tf
-    │       ├── outputs.tf
-    │       ├── versions.tf
-    │       ├── branding.tf  # Custom branding via Microsoft Graph API
-    │       ├── assets/      # Brand images (background, logos, favicon)
-    │       ├── css/         # custom.css for sign-in page
-    │       └── scripts/     # apply-branding.ps1
+    │   ├── entra/             # Entra External ID (CIAM) tenant module
+    │   │   ├── main.tf
+    │   │   ├── variables.tf
+    │   │   ├── outputs.tf
+    │   │   ├── versions.tf
+    │   │   ├── branding.tf    # Custom branding via Microsoft Graph API
+    │   │   ├── google-idp.tf  # Google social identity provider
+    │   │   ├── facebook-idp.tf # Facebook social identity provider
+    │   │   ├── assets/        # banner-logo.png, square-logo.jpg, favicon.ico
+    │   │   ├── css/           # custom.css for sign-in page
+    │   │   └── scripts/       # apply-branding.ps1, apply-google-idp.ps1, apply-facebook-idp.ps1, idp-helpers.ps1
+    │   ├── entra-app/         # App registration provisioning module
+    │   │   ├── main.tf
+    │   │   ├── variables.tf
+    │   │   ├── outputs.tf
+    │   │   ├── versions.tf
+    │   │   └── scripts/       # apply-app.ps1, delete-app.ps1, get-app.ps1, app-helpers.ps1
+    │   └── entra-user-flow/   # User flow module (placeholder)
     └── environments/
-        ├── dev/            # Dev environment
-        └── prod/           # Prod environment
+        ├── dev/
+        │   ├── core/          # CIAM tenant config — TFC workspace: core-dev
+        │   ├── apps/          # App registrations — TFC workspace: apps-dev
+        │   └── user-flows/    # User flows (placeholder)
+        └── prod/
+            ├── core/          # CIAM tenant config — TFC workspace: core-prod
+            ├── apps/          # App registrations — TFC workspace: apps-prod
+            └── user-flows/    # User flows (placeholder)
 ```
 
 ## Prerequisites
@@ -39,8 +57,8 @@ Cloud infrastructure and data management platform for Mahdavia, built on Azure w
 
 1. Create an account at https://app.terraform.io
 2. Create an organization named `noormahdi`
-3. Create two workspaces: `core-dev` and `core-prod`
-4. Set **Execution Mode** to **Local** on both workspaces
+3. Create four workspaces: `core-dev`, `core-prod`, `apps-dev`, `apps-prod`
+4. Set **Execution Mode** to **Local** on all four workspaces
 5. Generate an API token: **User Settings → Tokens → Create an API token**
 
 ### Azure — Service Principal
@@ -98,15 +116,23 @@ Create two environments at **GitHub repo → Settings → Environments**:
 
 | Environment | Protection rule | Environment secrets |
 |---|---|---|
-| `dev` | None — deploys automatically | `CIAM_CLIENT_ID`, `CIAM_CLIENT_SECRET` |
-| `prod` | **Required reviewers** — add yourself to gate prod deployments | `CIAM_CLIENT_ID`, `CIAM_CLIENT_SECRET` |
+| `dev` | None — deploys automatically | `CIAM_CLIENT_ID`, `CIAM_CLIENT_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `FACEBOOK_CLIENT_ID`, `FACEBOOK_CLIENT_SECRET` |
+| `prod` | **Required reviewers** — add yourself to gate prod deployments | `CIAM_CLIENT_ID`, `CIAM_CLIENT_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `FACEBOOK_CLIENT_ID`, `FACEBOOK_CLIENT_SECRET` |
 
-`CIAM_CLIENT_ID` and `CIAM_CLIENT_SECRET` are credentials for an app registration created **inside** each CIAM tenant (not the home tenant), used to apply custom branding via Microsoft Graph API. See [`infra/README.md`](infra/README.md) for the one-time CIAM setup steps.
+- `CIAM_CLIENT_ID` / `CIAM_CLIENT_SECRET`: credentials for an app registration created **inside** each CIAM tenant, used to apply branding and configure identity providers via Microsoft Graph API.
+- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`: optional — Google social IDP is skipped if not set.
+- `FACEBOOK_CLIENT_ID` / `FACEBOOK_CLIENT_SECRET`: optional — Facebook social IDP is skipped if not set.
 
-## CI/CD Pipeline
+See [`infra/README.md`](infra/README.md) for the one-time CIAM tenant setup steps.
+
+## CI/CD Pipelines
+
+### Core pipeline (`main.yml`)
+
+Manages CIAM tenant configuration (branding, social IDPs).
 
 Triggers:
-- **Push to `main`** — validates and deploys to dev automatically
+- **Push to `main`** (excluding `infra/environments/*/apps/**`) — validates and deploys to dev automatically
 - **Manual dispatch** — includes a **Deploy to production** toggle (off by default)
 
 | Stage | Runs when | Approval required |
@@ -114,6 +140,33 @@ Triggers:
 | Validate | Every trigger | No |
 | Deploy (dev) | After validate passes | No |
 | Deploy (prod) | Manual dispatch with `Deploy to production = true`, after dev succeeds | Yes |
+
+### Apps pipelines (`apps-dev.yml` / `apps-prod.yml`)
+
+Manage app registrations defined in `apps.yaml`.
+
+| Pipeline | Trigger | Working directory |
+|---|---|---|
+| `apps-dev.yml` | Push to `main` touching `infra/environments/dev/apps/**`, or manual dispatch | `infra/environments/dev/apps` |
+| `apps-prod.yml` | Push to `main` touching `infra/environments/prod/apps/**`, or manual dispatch | `infra/environments/prod/apps` |
+
+## App Registrations
+
+App registrations are declared in `apps.yaml` per environment. Terraform reads the YAML and provisions each app via the `entra-app` module using Microsoft Graph API.
+
+**Example `apps.yaml`:**
+
+```yaml
+apps:
+  - name: sample-app
+    display_name: "Sample App"
+    app_type: web          # "spa" (public, PKCE) or "web" (confidential)
+    redirect_uris:
+      - https://example.com/callback
+    logout_url: https://example.com/signout
+```
+
+To add an app, add an entry to `infra/environments/<env>/apps/apps.yaml` and push to `main`.
 
 ## Infrastructure
 
