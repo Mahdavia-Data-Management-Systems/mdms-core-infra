@@ -31,16 +31,13 @@ Cloud infrastructure and data management platform for Mahdavia, built on Azure w
     │   │   ├── outputs.tf
     │   │   ├── versions.tf
     │   │   └── scripts/       # apply-app.ps1, delete-app.ps1, get-app.ps1, app-helpers.ps1
-    │   └── entra-user-flow/   # User flow module (placeholder)
     └── environments/
         ├── dev/
         │   ├── core/          # CIAM tenant config — TFC workspace: core-dev
-        │   ├── apps/          # App registrations — TFC workspace: apps-dev
-        │   └── user-flows/    # User flows (placeholder)
+        │   └── apps/          # App registrations — TFC workspace: apps-dev
         └── prod/
             ├── core/          # CIAM tenant config — TFC workspace: core-prod
-            ├── apps/          # App registrations — TFC workspace: apps-prod
-            └── user-flows/    # User flows (placeholder)
+            └── apps/          # App registrations — TFC workspace: apps-prod
 ```
 
 ## Prerequisites

@@ -34,7 +34,6 @@ terraform apply
 
 - `infra/modules/entra/` — Reusable module that looks up an existing **Entra External ID (CIAM)** directory using `azapi` and reads its tenant ID. Also applies custom branding and social identity providers. It does not create the directory — it's a data-only module for the directory itself.
 - `infra/modules/entra-app/` — Provisions app registrations inside a CIAM tenant via Microsoft Graph API. Full lifecycle: creates on `apply`, deletes on `destroy`. Supports `spa` and `web` app types.
-- `infra/modules/entra-user-flow/` — Placeholder module; not yet implemented.
 - `infra/environments/dev/core/` — Instantiates the `entra` module for dev (`mahdavisonlinedev.onmicrosoft.com`, RG `rg-mdms-dev-si-01`). TFC workspace: `core-dev`.
 - `infra/environments/dev/apps/` — Instantiates `entra-app` for each entry in `apps.yaml`. TFC workspace: `apps-dev`.
 - `infra/environments/prod/core/` — Same pattern as dev core for prod (`mahdavisonline.onmicrosoft.com`, RG `rg-mdms-prod-si-01`). TFC workspace: `core-prod`.
@@ -107,4 +106,3 @@ Provisions app registrations and service principals in a CIAM tenant.
 - Terraform Cloud workspaces must be set to **Local** execution mode (the pipeline runs Terraform locally against TFC for state only).
 - The `entra` module expects the Entra External ID (CIAM) directory to already exist — it only reads it via `azapi_resource` data source, not creates it.
 - All resource groups are in the **South India** region.
-- `entra-user-flow` module and `user-flows` environments are placeholders with no implementation yet.

@@ -33,8 +33,6 @@ infra/
 │   │       ├── delete-app.ps1      # Delete app registration + service principal
 │   │       ├── get-app.ps1         # Query app details (external data source)
 │   │       └── app-helpers.ps1     # Shared: Get-GraphToken, Set-AppRegistration, etc.
-│   └── entra-user-flow/            # User flow module (placeholder — not yet implemented)
-│       └── scripts/
 └── environments/
     ├── dev/
     │   ├── core/                   # CIAM tenant config — TFC workspace: core-dev
@@ -42,26 +40,24 @@ infra/
     │   │   ├── variables.tf
     │   │   ├── outputs.tf
     │   │   └── versions.tf
-    │   ├── apps/                   # App registrations — TFC workspace: apps-dev
-    │   │   ├── main.tf
-    │   │   ├── apps.yaml           # Declarative app definitions
-    │   │   ├── variables.tf
-    │   │   ├── outputs.tf
-    │   │   └── versions.tf
-    │   └── user-flows/             # Placeholder
+    │   └── apps/                   # App registrations — TFC workspace: apps-dev
+    │       ├── main.tf
+    │       ├── apps.yaml           # Declarative app definitions
+    │       ├── variables.tf
+    │       ├── outputs.tf
+    │       └── versions.tf
     └── prod/
         ├── core/                   # CIAM tenant config — TFC workspace: core-prod
         │   ├── main.tf
         │   ├── variables.tf
         │   ├── outputs.tf
         │   └── versions.tf
-        ├── apps/                   # App registrations — TFC workspace: apps-prod
-        │   ├── main.tf
-        │   ├── apps.yaml
-        │   ├── variables.tf
-        │   ├── outputs.tf
-        │   └── versions.tf
-        └── user-flows/             # Placeholder
+        └── apps/                   # App registrations — TFC workspace: apps-prod
+            ├── main.tf
+            ├── apps.yaml
+            ├── variables.tf
+            ├── outputs.tf
+            └── versions.tf
 ```
 
 ## Environments
