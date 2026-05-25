@@ -12,14 +12,14 @@
 #   sign_in_audience : AzureADandPersonalMicrosoftAccount
 
 apps:
-  - name: sample-app
-    display_name: "Sample App"
+  - name: sample-app-3
+    display_name: "Sample App 3"
     app_type: web
     redirect_uris:
       - https://jwt.io
     logout_url: https://sample-dev.mahdavisonline.com/signout-callback-oidc
-  - name: sample-app-2
-    display_name: "Sample App 2"
+  - name: sample-app-4
+    display_name: "Sample App 4"
     app_type: web
     redirect_uris:
       - https://jwt.io
