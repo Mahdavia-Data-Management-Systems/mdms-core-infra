@@ -50,17 +50,19 @@ function Set-AppRegistration {
 
   $existing = Get-AppByDisplayName -Headers $Headers -DisplayName $DisplayName
 
+  $implicitGrant = @{ enableAccessTokenIssuance = $true; enableIdTokenIssuance = $true }
+
   $redirectBlock = if ($AppType -eq 'spa') {
-    @{ spa = @{ redirectUris = @($RedirectUris) } }
+    @{ spa = @{ redirectUris = @($RedirectUris) }; web = @{ implicitGrantSettings = $implicitGrant } }
   } else {
-    $web = @{ redirectUris = @($RedirectUris) }
+    $web = @{ redirectUris = @($RedirectUris); implicitGrantSettings = $implicitGrant }
     if ($LogoutUrl) { $web.logoutUrl = $LogoutUrl }
     @{ web = $web }
   }
 
   if ($null -eq $existing) {
     Write-Host "Application '$DisplayName' not found — creating..."
-    $body        = @{ displayName = $DisplayName; signInAudience = $SignInAudience }
+    $body = @{ displayName = $DisplayName; signInAudience = $SignInAudience; web = @{ implicitGrantSettings = $implicitGrant } }
     $redirectKey = if ($AppType -eq 'spa') { 'spa' } else { 'web' }
     $body[$redirectKey] = $redirectBlock[$redirectKey]
     Invoke-RestMethod -Method Post `
