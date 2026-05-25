@@ -14,6 +14,30 @@ function Get-AppByDisplayName {
   return $result.value | Select-Object -First 1
 }
 
+function Get-ServicePrincipalByAppId {
+  param([hashtable]$Headers, [string]$AppId)
+  $uri    = "https://graph.microsoft.com/v1.0/servicePrincipals?`$filter=appId eq '$AppId'"
+  $result = Invoke-RestMethod -Method Get -Uri $uri -Headers $Headers
+  return $result.value | Select-Object -First 1
+}
+
+function Set-ServicePrincipal {
+  param([hashtable]$Headers, [string]$AppId)
+  $sp = Get-ServicePrincipalByAppId -Headers $Headers -AppId $AppId
+  if ($null -eq $sp) {
+    Write-Host "Service principal for appId '$AppId' not found — creating..."
+    $body = @{ appId = $AppId } | ConvertTo-Json -Compress
+    Invoke-RestMethod -Method Post `
+      -Uri 'https://graph.microsoft.com/v1.0/servicePrincipals' `
+      -Headers $Headers `
+      -ContentType 'application/json' `
+      -Body $body | Out-Null
+    Write-Host "Service principal created."
+  } else {
+    Write-Host "Service principal for appId '$AppId' already exists (id: $($sp.id)) — no changes needed."
+  }
+}
+
 function Set-AppRegistration {
   param(
     [hashtable]$Headers,

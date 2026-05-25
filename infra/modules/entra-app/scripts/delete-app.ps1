@@ -13,6 +13,13 @@ if ($null -eq $app) {
     exit 0
 }
 
+$sp = Get-ServicePrincipalByAppId -Headers $headers -AppId $app.appId
+if ($null -ne $sp) {
+  Invoke-RestMethod -Uri "https://graph.microsoft.com/v1.0/servicePrincipals/$($sp.id)" `
+    -Method DELETE -Headers $headers
+  Write-Host "Deleted service principal for app '$($env:DISPLAY_NAME)' (sp id: $($sp.id))"
+}
+
 $uri = "https://graph.microsoft.com/v1.0/applications/$($app.id)"
 Invoke-RestMethod -Uri $uri -Method DELETE -Headers $headers
 Write-Host "Deleted app '$($env:DISPLAY_NAME)' (id: $($app.id))"

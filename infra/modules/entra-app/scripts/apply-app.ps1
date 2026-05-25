@@ -13,3 +13,8 @@ Set-AppRegistration `
   -RedirectUris    ($env:REDIRECT_URIS | ConvertFrom-Json) `
   -LogoutUrl       $env:LOGOUT_URL `
   -SignInAudience  $env:SIGN_IN_AUDIENCE
+
+$app = Get-AppByDisplayName -Headers $headers -DisplayName $env:DISPLAY_NAME
+if ($null -ne $app) {
+  Set-ServicePrincipal -Headers $headers -AppId $app.appId
+}

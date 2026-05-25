@@ -30,4 +30,10 @@ if ($null -eq $app) {
   exit 1
 }
 
-@{ app_id = $app.appId; object_id = $app.id } | ConvertTo-Json -Compress
+$sp = Get-ServicePrincipalByAppId -Headers $headers -AppId $app.appId
+
+@{
+  app_id                      = $app.appId
+  object_id                   = $app.id
+  service_principal_object_id = if ($null -ne $sp) { $sp.id } else { "" }
+} | ConvertTo-Json -Compress
