@@ -98,27 +98,54 @@ Add a second credential for prod:
 
 ### GitHub — Secrets
 
-Add the following secrets at **GitHub repo → Settings → Secrets and variables → Actions**:
+#### Organization secrets
+
+Set at **GitHub org → Settings → Secrets and variables → Actions → Secrets**:
 
 | Secret | Description |
 |---|---|
 | `TF_API_TOKEN` | Terraform Cloud API token |
+
+#### Environment secrets (`dev` and `prod`)
+
+Set at **GitHub repo → Settings → Environments → (dev \| prod) → Environment secrets**:
+
+| Secret | Description |
+|---|---|
+| `CIAM_CLIENT_SECRET` | Client secret for the CIAM tenant app registration |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth2 client secret |
+| `FACEBOOK_CLIENT_SECRET` | Facebook OAuth2 client secret |
+
+### GitHub — Variables
+
+#### Organization variables
+
+Set at **GitHub org → Settings → Secrets and variables → Actions → Variables**:
+
+| Variable | Description |
+|---|---|
 | `AZURE_CLIENT_ID` | Service principal app (client) ID |
 | `AZURE_TENANT_ID` | Home Azure AD tenant ID |
 | `AZURE_SUBSCRIPTION_ID` | Azure subscription ID |
+
+#### Environment variables (`dev` and `prod`)
+
+Set at **GitHub repo → Settings → Environments → (dev \| prod) → Environment variables**:
+
+| Variable | Description |
+|---|---|
+| `CIAM_CLIENT_ID` | App registration client ID from inside the CIAM tenant |
+| `GOOGLE_CLIENT_ID` | Google OAuth2 client ID (optional — IDP skipped if absent) |
+| `FACEBOOK_CLIENT_ID` | Facebook OAuth2 client ID (optional — IDP skipped if absent) |
 
 ### GitHub — Environments
 
 Create two environments at **GitHub repo → Settings → Environments**:
 
-| Environment | Protection rule | Environment secrets |
-|---|---|---|
-| `dev` | None — deploys automatically | `CIAM_CLIENT_ID`, `CIAM_CLIENT_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `FACEBOOK_CLIENT_ID`, `FACEBOOK_CLIENT_SECRET` |
-| `prod` | **Required reviewers** — add yourself to gate prod deployments | `CIAM_CLIENT_ID`, `CIAM_CLIENT_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `FACEBOOK_CLIENT_ID`, `FACEBOOK_CLIENT_SECRET` |
-
-- `CIAM_CLIENT_ID` / `CIAM_CLIENT_SECRET`: credentials for an app registration created **inside** each CIAM tenant, used to apply branding and configure identity providers via Microsoft Graph API.
-- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`: optional — Google social IDP is skipped if not set.
-- `FACEBOOK_CLIENT_ID` / `FACEBOOK_CLIENT_SECRET`: optional — Facebook social IDP is skipped if not set.
+| Environment | Protection rule |
+|---|---|
+| `dev` | None — deploys automatically |
+| `prod` | **Required reviewers** — add yourself to gate prod deployments |
 
 See [`infra/README.md`](infra/README.md) for the one-time CIAM tenant setup steps.
 
@@ -130,13 +157,13 @@ Manages CIAM tenant configuration (branding, social IDPs).
 
 Triggers:
 - **Push to `main`** (excluding `infra/environments/*/apps/**`) — validates and deploys to dev automatically
-- **Manual dispatch** — includes a **Deploy to production** toggle (off by default)
+- **Manual dispatch** — deploys to both dev and prod (prod requires reviewer approval)
 
 | Stage | Runs when | Approval required |
 |---|---|---|
 | Validate | Every trigger | No |
 | Deploy (dev) | After validate passes | No |
-| Deploy (prod) | Manual dispatch with `Deploy to production = true`, after dev succeeds | Yes |
+| Deploy (prod) | Manual dispatch, after dev succeeds | Yes |
 
 ### Apps pipelines (`apps-dev.yml` / `apps-prod.yml`)
 

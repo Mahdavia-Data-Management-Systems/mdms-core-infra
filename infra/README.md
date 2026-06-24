@@ -132,7 +132,7 @@ apps:
    - `Application.ReadWrite.All` — for app registrations
    - `IdentityProvider.ReadWrite.All` — for social IDPs
 3. Create a client secret.
-4. Add `CIAM_CLIENT_ID` and `CIAM_CLIENT_SECRET` as secrets on the corresponding GitHub Environment (`dev` / `prod`).
+4. Add `CIAM_CLIENT_ID` as an **environment variable** and `CIAM_CLIENT_SECRET` as an **environment secret** on the corresponding GitHub Environment (`dev` / `prod`).
 
 ## CI/CD Pipelines
 
@@ -144,7 +144,7 @@ Manages CIAM tenant configuration (branding, social IDPs). Triggered on push to 
 |---|---|---|
 | Validate | Always | No |
 | Deploy (dev) | Always, after validate | No |
-| Deploy (prod) | Manual dispatch with `deploy_prod = true`, after dev succeeds | Yes — configured on the `prod` GitHub Environment |
+| Deploy (prod) | Manual dispatch, after dev succeeds | Yes — configured on the `prod` GitHub Environment |
 
 ### Apps pipelines
 
@@ -165,28 +165,6 @@ GitHub authenticates to Azure via **federated credentials (OIDC)** — no client
 - PowerShell 7+ (`pwsh`) — for branding, IDP, and app provisioner scripts
 - Terraform Cloud account in the `noormahdi` organization with workspaces `core-dev`, `core-prod`, `apps-dev`, `apps-prod` set to **Local** execution mode
 - Azure service principal with `Contributor` role, configured with federated credentials for the `dev` and `prod` GitHub Environments
-
-## Required GitHub Secrets
-
-### Repository-level
-
-| Secret | Description |
-|---|---|
-| `TF_API_TOKEN` | Terraform Cloud API token |
-| `AZURE_CLIENT_ID` | Service principal (app) client ID |
-| `AZURE_TENANT_ID` | Home Azure AD tenant ID |
-| `AZURE_SUBSCRIPTION_ID` | Azure subscription ID |
-
-### Environment-level (`dev` and `prod`)
-
-| Secret | Description |
-|---|---|
-| `CIAM_CLIENT_ID` | App registration client ID from inside the CIAM tenant |
-| `CIAM_CLIENT_SECRET` | Corresponding client secret |
-| `GOOGLE_CLIENT_ID` | Google OAuth2 client ID (optional — IDP skipped if absent) |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth2 client secret |
-| `FACEBOOK_CLIENT_ID` | Facebook OAuth2 client ID (optional — IDP skipped if absent) |
-| `FACEBOOK_CLIENT_SECRET` | Facebook OAuth2 client secret |
 
 ## Usage
 
