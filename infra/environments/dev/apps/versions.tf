@@ -17,7 +17,7 @@ terraform {
   }
 
   cloud {
-    organization = "noormahdi"
+    organization = "MDMS"
 
     workspaces {
       name = "apps-dev"

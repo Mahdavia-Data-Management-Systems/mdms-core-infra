@@ -53,7 +53,7 @@ Cloud infrastructure and data management platform for Mahdavia, built on Azure w
 ### Terraform Cloud
 
 1. Create an account at https://app.terraform.io
-2. Create an organization named `noormahdi`
+2. Create an organization named `MDMS`
 3. Create four workspaces: `core-dev`, `core-prod`, `apps-dev`, `apps-prod`
 4. Set **Execution Mode** to **Local** on all four workspaces
 5. Generate an API token: **User Settings → Tokens → Create an API token**

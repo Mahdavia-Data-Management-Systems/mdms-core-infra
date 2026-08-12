@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Mahdavia Data Management System (MDMS) — Azure cloud infrastructure managed with Terraform. State is stored in Terraform Cloud (`noormahdi` org, workspaces `core-dev`, `core-prod`, `apps-dev`, `apps-prod`).
+Mahdavia Data Management System (MDMS) — Azure cloud infrastructure managed with Terraform. State is stored in Terraform Cloud (`MDMS` org, workspaces `core-dev`, `core-prod`, `apps-dev`, `apps-prod`).
 
 ## Common Commands
 

@@ -1,6 +1,6 @@
 # Infrastructure as Code
 
-Manages cloud infrastructure using Terraform. State is stored in Terraform Cloud under the `noormahdi` organization.
+Manages cloud infrastructure using Terraform. State is stored in Terraform Cloud under the `MDMS` organization.
 
 ## Structure
 
@@ -163,7 +163,7 @@ GitHub authenticates to Azure via **federated credentials (OIDC)** — no client
 
 - Terraform >= 1.7
 - PowerShell 7+ (`pwsh`) — for branding, IDP, and app provisioner scripts
-- Terraform Cloud account in the `noormahdi` organization with workspaces `core-dev`, `core-prod`, `apps-dev`, `apps-prod` set to **Local** execution mode
+- Terraform Cloud account in the `MDMS` organization with workspaces `core-dev`, `core-prod`, `apps-dev`, `apps-prod` set to **Local** execution mode
 - Azure service principal with `Contributor` role, configured with federated credentials for the `dev` and `prod` GitHub Environments
 
 ## Usage
