@@ -18,3 +18,8 @@ apps:
     redirect_uris:
       - https://jwt.io
     logout_url: https://sample-dev.mahdavisonline.com/signout-callback-oidc
+  - name: ishqnama-spa
+    display_name: "Ishqnama SPA"
+    app_type: spa
+    redirect_uris:
+      - http://localhost:3000
