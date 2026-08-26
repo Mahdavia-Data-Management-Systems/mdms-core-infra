@@ -1,12 +1,13 @@
 name: Apps (Dev) CI/CD Pipeline
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - infra/environments/dev/apps/**
-  workflow_dispatch:
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - infra/environments/dev/apps/**
+#   workflow_dispatch:
+on: [] # Disablling it as apps must be managed manually via Azure Portal
 
 permissions:
   id-token: write
