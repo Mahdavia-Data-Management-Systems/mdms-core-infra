@@ -23,3 +23,8 @@ apps:
     app_type: spa
     redirect_uris:
       - http://localhost:3000
+  - name: mdms-spa
+    display_name: "MDMS SPA"
+    app_type: spa
+    redirect_uris:
+      - http://localhost:3000

@@ -18,3 +18,8 @@ apps:
     redirect_uris:
       - https://jwt.io
     logout_url: https://sample.mahdavisonline.com/signout-callback-oidc
+  - name: mdms-spa
+    display_name: "MDMS SPA"
+    app_type: spa
+    redirect_uris:
+      - https://mahdavisonline.com
