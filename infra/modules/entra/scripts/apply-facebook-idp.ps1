@@ -9,6 +9,6 @@ $headers = @{ Authorization = "Bearer $token" }
 Set-SocialIdentityProvider `
   -Headers         $headers `
   -ProviderType    'Facebook' `
-  -DisplayName     'Login with Facebook' `
+  -DisplayName     'Facebook' `
   -IdpClientId     $env:FACEBOOK_CLIENT_ID `
   -IdpClientSecret $env:FACEBOOK_CLIENT_SECRET

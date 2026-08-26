@@ -1,24 +1,168 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #0F3D2E;
+/* ==========================================================================
+   Mahdavis Online — Entra External ID (CIAM) sign-in page theme
+   Built to match https://mahdavisonline.com (fonts, colors, button/card style)
+   Only "ext-" prefixed classes are customizable on this page template.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+:root {
+  --mo-deep-green: #1a2e2a;      /* primary text / brand ink */
+  --mo-hero-green-1: #0a2e22;    /* hero gradient start */
+  --mo-hero-green-2: #0f3d2e;    /* hero gradient mid */
+  --mo-hero-green-3: #0d362a;    /* hero gradient end */
+  --mo-accent-green: #1f7a5c;    /* links / buttons */
+  --mo-accent-green-hover: #17604a;
+  --mo-gold: #c9a24a;            /* gold accent rule/highlight */
+  --mo-muted: rgba(26, 46, 42, 0.6);
+  --mo-white: #ffffff;
 }
 
-button {
-  background-color: #1F7A5C !important;
-  border-radius: 6px;
-  border: none;
-  font-weight: 600;
+/* Centering wrapper for the whole sign-in experience */
+.ext-middle {
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
 }
 
-button:hover {
-  background-color: #16664C !important;
+/* The white sign-in card */
+.ext-sign-in-box {
+  background: var(--mo-white) !important;
+  border-radius: 12px !important;
+  border-top: 4px solid var(--mo-gold) !important;
+  box-shadow: 0 12px 32px rgba(10, 46, 34, 0.25) !important;
+  padding: 44px 40px !important;
 }
 
-a {
-  color: #C9A24A;
-  text-decoration: none;
+/* Organization banner logo */
+.ext-banner-logo {
+  max-height: 40px !important;
+  margin-bottom: 8px !important;
 }
 
-a:hover {
-  text-decoration: underline;
+/* "Sign in" heading */
+.ext-title {
+  font-family: "EB Garamond", "Noto Serif", Georgia, serif !important;
+  font-weight: 500 !important;
+  font-size: 28px !important;
+  color: var(--mo-deep-green) !important;
+  letter-spacing: -0.3px !important;
+}
+
+/* "Sign in to access Mahdavis Online" subtext */
+.ext-header-description {
+  font-family: "Source Sans 3", "Segoe UI", sans-serif !important;
+  color: var(--mo-muted) !important;
+  font-size: 15px !important;
+  margin-top: 4px !important;
+}
+
+/* Email / text input */
+.ext-input.ext-text-box {
+  font-family: "Source Sans 3", "Segoe UI", sans-serif !important;
+  border: 1px solid rgba(26, 46, 42, 0.25) !important;
+  border-radius: 8px !important;
+  padding: 10px 12px !important;
+  color: var(--mo-deep-green) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.ext-input.ext-text-box:focus {
+  border-color: var(--mo-accent-green) !important;
+  box-shadow: 0 0 0 3px rgba(31, 122, 92, 0.15) !important;
+  outline: none !important;
+}
+
+/* "No account? Create one" link row */
+.ext-password-reset-links-container {
+  margin-top: 12px !important;
+}
+.ext-link {
+  font-family: "Source Sans 3", "Segoe UI", sans-serif !important;
+  color: var(--mo-accent-green) !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+}
+.ext-link:hover {
+  color: var(--mo-accent-green-hover) !important;
+  text-decoration: underline !important;
+}
+
+/* Button row + primary "Next" button */
+.ext-button-field-container {
+  margin-top: 20px !important;
+}
+.ext-button {
+  font-family: "Source Sans 3", "Segoe UI", sans-serif !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  padding: 9px 22px !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.ext-button.ext-primary {
+  background: var(--mo-accent-green) !important;
+  border: 1px solid var(--mo-accent-green) !important;
+  color: var(--mo-white) !important;
+}
+.ext-button.ext-primary:hover {
+  background: var(--mo-accent-green-hover) !important;
+  border-color: var(--mo-accent-green-hover) !important;
+}
+
+/* Secondary button, e.g. "Back" — outlined style, matches the site's nav "Sign In" button */
+.ext-button.ext-secondary {
+  background: transparent !important;
+  border: 1px solid var(--mo-accent-green) !important;
+  color: var(--mo-accent-green) !important;
+}
+.ext-button.ext-secondary:hover {
+  background: rgba(31, 122, 92, 0.08) !important;
+  border-color: var(--mo-accent-green-hover) !important;
+  color: var(--mo-accent-green-hover) !important;
+}
+
+/* Tagline strip: "One Identity. One Community. Endless Access." */
+.ext-boilerplate-text {
+  font-family: "EB Garamond", "Noto Serif", Georgia, serif !important;
+  font-style: italic;
+  color: var(--mo-deep-green) !important;
+  background: rgba(201, 162, 74, 0.12) !important;
+  border-top: 1px solid rgba(26, 46, 42, 0.08) !important;
+  font-size: 15px !important;
+  padding: 16px 20px !important;
+}
+
+/* Federated sign-in tile (Google) */
+.ext-promoted-fed-cred-box {
+  margin-top: 16px !important;
+}
+.ext-promoted-fed-cred-box button {
+  font-family: "Source Sans 3", "Segoe UI", sans-serif !important;
+  border: 1px solid rgba(26, 46, 42, 0.2) !important;
+  border-radius: 10px !important;
+  background: var(--mo-white) !important;
+  color: var(--mo-deep-green) !important;
+  font-weight: 600 !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.ext-promoted-fed-cred-box button:hover {
+  border-color: var(--mo-accent-green) !important;
+  box-shadow: 0 4px 12px rgba(10, 46, 34, 0.15) !important;
+}
+
+/* Footer / troubleshooting link */
+.ext-footer {
+  margin-top: 24px !important;
+}
+.ext-footer-links {
+  display: flex !important;
+  justify-content: center !important;
+}
+.ext-footer-item,
+.ext-footer-content {
+  font-family: "Source Sans 3", "Segoe UI", sans-serif !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 13px !important;
+}
+.ext-footer-item:hover,
+.ext-footer-content:hover {
+  color: var(--mo-white) !important;
+  text-decoration: underline !important;
 }

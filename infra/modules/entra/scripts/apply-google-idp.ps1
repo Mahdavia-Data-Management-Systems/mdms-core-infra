@@ -9,6 +9,6 @@ $headers = @{ Authorization = "Bearer $token" }
 Set-SocialIdentityProvider `
   -Headers         $headers `
   -ProviderType    'Google' `
-  -DisplayName     'Login with Google' `
+  -DisplayName     'Google' `
   -IdpClientId     $env:GOOGLE_CLIENT_ID `
   -IdpClientSecret $env:GOOGLE_CLIENT_SECRET
