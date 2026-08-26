@@ -6,18 +6,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=swap');
 
-:root {
-  --mo-deep-green: #1a2e2a;      /* primary text / brand ink */
-  --mo-hero-green-1: #0a2e22;    /* hero gradient start */
-  --mo-hero-green-2: #0f3d2e;    /* hero gradient mid */
-  --mo-hero-green-3: #0d362a;    /* hero gradient end */
-  --mo-accent-green: #1f7a5c;    /* links / buttons */
-  --mo-accent-green-hover: #17604a;
-  --mo-gold: #c9a24a;            /* gold accent rule/highlight */
-  --mo-muted: rgba(26, 46, 42, 0.6);
-  --mo-white: #ffffff;
-}
-
 /* Centering wrapper for the whole sign-in experience */
 .ext-middle {
   font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
@@ -25,9 +13,9 @@
 
 /* The white sign-in card */
 .ext-sign-in-box {
-  background: var(--mo-white) !important;
+  background: #ffffff !important;
   border-radius: 12px !important;
-  border-top: 4px solid var(--mo-gold) !important;
+  border-top: 4px solid #c9a24a !important;
   box-shadow: 0 12px 32px rgba(10, 46, 34, 0.25) !important;
   padding: 44px 40px !important;
 }
@@ -43,14 +31,14 @@
   font-family: "EB Garamond", "Noto Serif", Georgia, serif !important;
   font-weight: 500 !important;
   font-size: 28px !important;
-  color: var(--mo-deep-green) !important;
+  color: #1a2e2a !important;
   letter-spacing: -0.3px !important;
 }
 
 /* "Sign in to access Mahdavis Online" subtext */
 .ext-header-description {
   font-family: "Source Sans 3", "Segoe UI", sans-serif !important;
-  color: var(--mo-muted) !important;
+  color: rgba(26, 46, 42, 0.6) !important;
   font-size: 15px !important;
   margin-top: 4px !important;
 }
@@ -61,11 +49,11 @@
   border: 1px solid rgba(26, 46, 42, 0.25) !important;
   border-radius: 8px !important;
   padding: 10px 12px !important;
-  color: var(--mo-deep-green) !important;
+  color: #1a2e2a !important;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .ext-input.ext-text-box:focus {
-  border-color: var(--mo-accent-green) !important;
+  border-color: #1f7a5c !important;
   box-shadow: 0 0 0 3px rgba(31, 122, 92, 0.15) !important;
   outline: none !important;
 }
@@ -76,12 +64,12 @@
 }
 .ext-link {
   font-family: "Source Sans 3", "Segoe UI", sans-serif !important;
-  color: var(--mo-accent-green) !important;
+  color: #1f7a5c !important;
   font-weight: 600 !important;
   text-decoration: none !important;
 }
 .ext-link:hover {
-  color: var(--mo-accent-green-hover) !important;
+  color: #17604a !important;
   text-decoration: underline !important;
 }
 
@@ -97,32 +85,32 @@
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 .ext-button.ext-primary {
-  background: var(--mo-accent-green) !important;
-  border: 1px solid var(--mo-accent-green) !important;
-  color: var(--mo-white) !important;
+  background: #1f7a5c !important;
+  border: 1px solid #1f7a5c !important;
+  color: #ffffff !important;
 }
 .ext-button.ext-primary:hover {
-  background: var(--mo-accent-green-hover) !important;
-  border-color: var(--mo-accent-green-hover) !important;
+  background: #17604a !important;
+  border-color: #17604a !important;
 }
 
 /* Secondary button, e.g. "Back" — outlined style, matches the site's nav "Sign In" button */
 .ext-button.ext-secondary {
   background: transparent !important;
-  border: 1px solid var(--mo-accent-green) !important;
-  color: var(--mo-accent-green) !important;
+  border: 1px solid #1f7a5c !important;
+  color: #1f7a5c !important;
 }
 .ext-button.ext-secondary:hover {
   background: rgba(31, 122, 92, 0.08) !important;
-  border-color: var(--mo-accent-green-hover) !important;
-  color: var(--mo-accent-green-hover) !important;
+  border-color: #17604a !important;
+  color: #17604a !important;
 }
 
 /* Tagline strip: "One Identity. One Community. Endless Access." */
 .ext-boilerplate-text {
   font-family: "EB Garamond", "Noto Serif", Georgia, serif !important;
   font-style: italic;
-  color: var(--mo-deep-green) !important;
+  color: #1a2e2a !important;
   background: rgba(201, 162, 74, 0.12) !important;
   border-top: 1px solid rgba(26, 46, 42, 0.08) !important;
   font-size: 15px !important;
@@ -137,13 +125,13 @@
   font-family: "Source Sans 3", "Segoe UI", sans-serif !important;
   border: 1px solid rgba(26, 46, 42, 0.2) !important;
   border-radius: 10px !important;
-  background: var(--mo-white) !important;
-  color: var(--mo-deep-green) !important;
+  background: #ffffff !important;
+  color: #1a2e2a !important;
   font-weight: 600 !important;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .ext-promoted-fed-cred-box button:hover {
-  border-color: var(--mo-accent-green) !important;
+  border-color: #1f7a5c !important;
   box-shadow: 0 4px 12px rgba(10, 46, 34, 0.15) !important;
 }
 
@@ -163,6 +151,6 @@
 }
 .ext-footer-item:hover,
 .ext-footer-content:hover {
-  color: var(--mo-white) !important;
+  color: #ffffff !important;
   text-decoration: underline !important;
 }
