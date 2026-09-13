@@ -118,24 +118,6 @@
   padding: 16px 20px !important;
 }
 
-/* Federated sign-in tile (Google) */
-.ext-promoted-fed-cred-box {
-  margin-top: 16px !important;
-}
-.ext-promoted-fed-cred-box button {
-  font-family: "Source Sans 3", "Segoe UI", sans-serif !important;
-  border: 1px solid rgba(26, 46, 42, 0.2) !important;
-  border-radius: 10px !important;
-  background: #ffffff !important;
-  color: #1a2e2a !important;
-  font-weight: 600 !important;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-.ext-promoted-fed-cred-box button:hover {
-  border-color: #1f7a5c !important;
-  box-shadow: 0 4px 12px rgba(10, 46, 34, 0.15) !important;
-}
-
 /* Footer / troubleshooting link */
 .ext-footer {
   margin-top: 24px !important;
@@ -154,4 +136,26 @@
 .ext-footer-content:hover {
   color: #ffffff !important;
   text-decoration: underline !important;
+}
+
+/* Federated sign-in tiles (Facebook, Google, and any future IdPs)
+   NOTE: only the container is styleable — element/descendant selectors
+   (e.g. ".ext-promoted-fed-cred-box button") are stripped by the sanitizer.
+   Buttons inherit font/colour from this box; MS default per-tile hover remains. */
+.ext-promoted-fed-cred-box {
+  margin-top: 16px !important;
+  padding: 10px 12px !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(26, 46, 42, 0.12) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(10, 46, 34, 0.25) !important;
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  color: #1a2e2a !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.ext-promoted-fed-cred-box:hover,
+.ext-promoted-fed-cred-box:focus-within {
+  border-color: rgba(31, 122, 92, 0.6) !important;
 }
