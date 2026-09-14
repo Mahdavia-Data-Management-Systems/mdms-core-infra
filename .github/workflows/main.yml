@@ -7,17 +7,13 @@ on:
     paths-ignore:
       - infra/environments/dev/apps/**
       - infra/environments/prod/apps/**
+      - plans/**
+      - "**.md"
   workflow_dispatch:
 
 permissions:
   id-token: write
   contents: read
-
-env:
-  ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
-  ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-  ARM_USE_OIDC: "true"
-  TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
 jobs:
   validate:
@@ -42,6 +38,10 @@ jobs:
       run:
         working-directory: infra/environments/dev/core
     env:
+      ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      ARM_USE_OIDC: "true"
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
       ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
       TF_VAR_subscription_id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
       TF_VAR_ciam_client_id: ${{ vars.CIAM_CLIENT_ID }}
@@ -75,6 +75,10 @@ jobs:
       run:
         working-directory: infra/environments/prod/core
     env:
+      ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      ARM_USE_OIDC: "true"
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
       ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
       TF_VAR_subscription_id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
       TF_VAR_ciam_client_id: ${{ vars.CIAM_CLIENT_ID }}
