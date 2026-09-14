@@ -1,0 +1,32 @@
+# Validation for pull requests. This is the only workflow a fork can reach, so it is deliberately
+# inert: the trigger is pull_request (never pull_request_target, which would run this repo's code
+# with the base branch's secrets), the token is read-only, no job declares an environment, and no
+# step touches Azure or Terraform Cloud. Nothing here can deploy, reach the CIAM tenant, or cost
+# money.
+name: PR Validation
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  # The job runs unconditionally rather than behind a path filter: it is a required status check on
+  # main, and a check that is skipped never reports, which would block the PR forever.
+  terraform:
+    name: Validate Terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      # fmt is the only check that needs no init. terraform validate would, and the cloud {} block
+      # in each environment makes init require the Terraform Cloud token, which must not be in
+      # scope in a workflow a fork can trigger. main.yml still validates before it applies.
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive infra/
