@@ -150,7 +150,7 @@ gh api -X POST "repos/$R/environments/prod/deployment-branch-policies" -f name=m
 Resolve the id with `gh api users/noormahdi --jq .id`, and confirm the reviewer survived with
 `gh api "repos/$R/environments/prod" --jq '.protection_rules'`.
 
-### Step 2 — Add a ruleset on `main`
+### Step 2 (DONE) — Add a ruleset on `main`
 
 Require a pull request with one approval, require the PR validation checks from step 4, require
 code owner review, and block deletion and force-push. The sole maintainer needs to be a bypass
@@ -160,7 +160,21 @@ policies from step 1 still apply to whatever is merged.
 Given that an apply here executes repository PowerShell, this step is worth more in this
 repository than in any other in the organisation.
 
-### Step 3 — Restrict the actions allowlist
+Two deliberate deviations from the `ishqnama-web` baseline, both to be closed later:
+
+- **No `required_status_checks` rule yet.** `pr-validation.yml` does not exist, and requiring a
+  check that never reports would block every merge. Add the rule once step 4 has landed and its
+  job names are known.
+- **No team `required_reviewers` entry.** The baseline names the `pr-approvers` team, but that
+  team only has access to `ishqnama-web`, and granting it access here is a permission change that
+  was deliberately not made as part of this work. `required_approving_review_count: 1` plus
+  `require_code_owner_review` gives the same result today, because the team's only member is
+  already an administrator of this repository. Revisit if a second contributor is ever added.
+
+`require_code_owner_review` is set now even though `.github/CODEOWNERS` does not yet exist; with no
+owners defined it is satisfied vacuously, and it starts binding the moment step 6 lands.
+
+### Step 3 (DONE) — Restrict the actions allowlist
 
 The only actions used are `actions/checkout` and `hashicorp/setup-terraform`.
 
@@ -182,7 +196,7 @@ only at a point where it can still prevent a merge.
 `terraform validate` is deliberately excluded: it needs `terraform init`, and the `cloud {}` block
 requires the Terraform Cloud token, which must not be exposed to a fork.
 
-### Step 5 — Tighten fork pull request approval
+### Step 5 (DONE) — Tighten fork pull request approval
 
 ```bash
 gh api -X PUT "repos/$R/actions/permissions/fork-pr-contributor-approval" \
